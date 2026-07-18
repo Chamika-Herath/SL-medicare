@@ -82,26 +82,97 @@
 
                 <!-- Navigation Links -->
                 <nav class="p-4 space-y-2">
-                    <a href="<?php echo e(route('dashboard')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 <?php echo e($current_page === 'dashboard' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'); ?>">
-                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" />
-                        </svg>
-                        <span class="text-sm font-medium">Dashboard</span>
-                    </a>
+                    <?php if($role === 'ADMIN'): ?>
+                        <!-- Admin Dashboard Link -->
+                        <a href="<?php echo e(route('dashboard')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 <?php echo e($current_page === 'dashboard' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'); ?>">
+                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" />
+                            </svg>
+                            <span class="text-sm font-medium">Dashboard</span>
+                        </a>
 
-                    <a href="<?php echo e(route('appointments')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 <?php echo e($current_page === 'appointments' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'); ?>">
-                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                        <span class="text-sm font-medium">Appointments</span>
-                    </a>
+                        <!-- Admin Doctor Registry Link -->
+                        <a href="<?php echo e(route('admin.doctors')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 <?php echo e($current_page === 'admin.doctors' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'); ?>">
+                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                            <span class="text-sm font-medium">Doctor Registry</span>
+                        </a>
 
-                    <a href="<?php echo e(route('records')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 <?php echo e($current_page === 'records' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'); ?>">
-                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                        <span class="text-sm font-medium">Medical Records</span>
-                    </a>
+                        <!-- Admin Patient Registry Link -->
+                        <a href="<?php echo e(route('admin.patients')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 <?php echo e($current_page === 'admin.patients' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'); ?>">
+                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                            <span class="text-sm font-medium">Patient Registry</span>
+                        </a>
+
+                        <!-- Admin Appointments Link -->
+                        <a href="<?php echo e(route('appointments')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 <?php echo e($current_page === 'appointments' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'); ?>">
+                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <span class="text-sm font-medium">Appointments</span>
+                        </a>
+
+                    <?php elseif($role === 'DOCTOR'): ?>
+                        <!-- Doctor Dashboard Link -->
+                        <a href="<?php echo e(route('dashboard')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 <?php echo e($current_page === 'dashboard' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'); ?>">
+                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" />
+                            </svg>
+                            <span class="text-sm font-medium">Dashboard</span>
+                        </a>
+
+                        <!-- Doctor Appointment History Link -->
+                        <a href="<?php echo e(route('doctor.appointments')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 <?php echo e($current_page === 'doctor.appointments' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'); ?>">
+                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span class="text-sm font-medium">Appointment History</span>
+                        </a>
+
+                        <!-- Doctor Patient Search Link -->
+                        <a href="<?php echo e(route('doctor.patients')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 <?php echo e($current_page === 'doctor.patients' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'); ?>">
+                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                            <span class="text-sm font-medium">Patient Search & Logs</span>
+                        </a>
+
+                        <!-- Doctor Manage Records Link -->
+                        <a href="<?php echo e(route('records')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 <?php echo e($current_page === 'records' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'); ?>">
+                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            <span class="text-sm font-medium">Add Medical Record</span>
+                        </a>
+
+                    <?php else: ?>
+                        <!-- Patient Dashboard Link -->
+                        <a href="<?php echo e(route('dashboard')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 <?php echo e($current_page === 'dashboard' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'); ?>">
+                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" />
+                            </svg>
+                            <span class="text-sm font-medium">Dashboard</span>
+                        </a>
+
+                        <!-- Patient Book Appointment Link -->
+                        <a href="<?php echo e(route('appointments')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 <?php echo e($current_page === 'appointments' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'); ?>">
+                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <span class="text-sm font-medium">Book Appointment</span>
+                        </a>
+
+                        <!-- Patient My History Link -->
+                        <a href="<?php echo e(route('records')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 <?php echo e($current_page === 'records' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'); ?>">
+                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            <span class="text-sm font-medium">My Medical History</span>
+                        </a>
+                    <?php endif; ?>
                 </nav>
             </div>
 
@@ -194,24 +265,97 @@
             </div>
 
             <nav class="p-4 space-y-2">
-                <a href="<?php echo e(route('dashboard')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
-                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" />
-                    </svg>
-                    <span class="text-sm font-medium">Dashboard</span>
-                </a>
-                <a href="<?php echo e(route('appointments')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
-                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                    <span class="text-sm font-medium">Appointments</span>
-                </a>
-                <a href="<?php echo e(route('records')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
-                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                    <span class="text-sm font-medium">Medical Records</span>
-                </a>
+                <?php if($role === 'ADMIN'): ?>
+                    <!-- Admin Dashboard Link -->
+                    <a href="<?php echo e(route('dashboard')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" />
+                        </svg>
+                        <span class="text-sm font-medium">Dashboard</span>
+                    </a>
+
+                    <!-- Admin Doctor Registry Link -->
+                    <a href="<?php echo e(route('admin.doctors')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                        <span class="text-sm font-medium">Doctor Registry</span>
+                    </a>
+
+                    <!-- Admin Patient Registry Link -->
+                    <a href="<?php echo e(route('admin.patients')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <span class="text-sm font-medium">Patient Registry</span>
+                    </a>
+
+                    <!-- Admin Appointments Link -->
+                    <a href="<?php echo e(route('appointments')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <span class="text-sm font-medium">Appointments</span>
+                    </a>
+
+                <?php elseif($role === 'DOCTOR'): ?>
+                    <!-- Doctor Dashboard Link -->
+                    <a href="<?php echo e(route('dashboard')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" />
+                        </svg>
+                        <span class="text-sm font-medium">Dashboard</span>
+                    </a>
+
+                    <!-- Doctor Appointment History Link -->
+                    <a href="<?php echo e(route('doctor.appointments')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span class="text-sm font-medium">Appointment History</span>
+                    </a>
+
+                    <!-- Doctor Patient Search Link -->
+                    <a href="<?php echo e(route('doctor.patients')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        <span class="text-sm font-medium">Patient Search & Logs</span>
+                    </a>
+
+                    <!-- Doctor Manage Records Link -->
+                    <a href="<?php echo e(route('records')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        <span class="text-sm font-medium">Add Medical Record</span>
+                    </a>
+
+                <?php else: ?>
+                    <!-- Patient Dashboard Link -->
+                    <a href="<?php echo e(route('dashboard')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" />
+                        </svg>
+                        <span class="text-sm font-medium">Dashboard</span>
+                    </a>
+
+                    <!-- Patient Book Appointment Link -->
+                    <a href="<?php echo e(route('appointments')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <span class="text-sm font-medium">Book Appointment</span>
+                    </a>
+
+                    <!-- Patient My History Link -->
+                    <a href="<?php echo e(route('records')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        <span class="text-sm font-medium">My Medical History</span>
+                    </a>
+                <?php endif; ?>
             </nav>
         </div>
         

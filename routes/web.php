@@ -72,4 +72,20 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/records/store', [MedicalRecordController::class, 'store'])
         ->middleware('role:DOCTOR,ADMIN')
         ->name('records.store');
+
+    // Admin Directories
+    Route::get('/admin/doctors', [DashboardController::class, 'showDoctors'])
+        ->middleware('role:ADMIN')
+        ->name('admin.doctors');
+    Route::get('/admin/patients', [DashboardController::class, 'showPatients'])
+        ->middleware('role:ADMIN')
+        ->name('admin.patients');
+
+    // Doctor Directories & History
+    Route::get('/doctor/appointments', [AppointmentController::class, 'history'])
+        ->middleware('role:DOCTOR')
+        ->name('doctor.appointments');
+    Route::get('/doctor/patients', [MedicalRecordController::class, 'searchPatients'])
+        ->middleware('role:DOCTOR')
+        ->name('doctor.patients');
 });

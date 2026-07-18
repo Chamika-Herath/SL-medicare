@@ -117,4 +117,22 @@ class DashboardController extends Controller
             ]);
         }
     }
+
+    public function showDoctors()
+    {
+        $user = Auth::user();
+        $role = $user->role;
+        $fullName = $user->profile->full_name ?? 'HMS Admin';
+        $doctorsList = User::where('role', 'DOCTOR')->with('profile')->orderBy('created_at', 'desc')->get();
+        return view('admin.doctors', compact('role', 'fullName', 'doctorsList'));
+    }
+
+    public function showPatients()
+    {
+        $user = Auth::user();
+        $role = $user->role;
+        $fullName = $user->profile->full_name ?? 'HMS Admin';
+        $patientsList = User::where('role', 'PATIENT')->with('profile')->orderBy('created_at', 'desc')->get();
+        return view('admin.patients', compact('role', 'fullName', 'patientsList'));
+    }
 }
