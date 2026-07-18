@@ -1,6 +1,22 @@
 <?php $__env->startSection('title', 'Dashboard'); ?>
 
 <?php $__env->startSection('content'); ?>
+<!-- Alert Messages -->
+<?php if(session('success')): ?>
+    <div class="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-xl p-4 text-sm mb-6 flex items-center gap-2 shadow animate-fade-in">
+        <span class="h-2 w-2 rounded-full bg-emerald-400 animate-ping"></span>
+        <span class="font-bold">Success:</span> <?php echo e(session('success')); ?>
+
+    </div>
+<?php endif; ?>
+<?php if($errors->any()): ?>
+    <div class="bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl p-4 text-sm mb-6 flex items-center gap-2 shadow animate-fade-in">
+        <span class="h-2 w-2 rounded-full bg-red-400 animate-pulse"></span>
+        <span class="font-bold">Error:</span> <?php echo e($errors->first()); ?>
+
+    </div>
+<?php endif; ?>
+
 <!-- Welcome banner (With sliding entrance animation and dark layout) -->
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-blue-900/40 to-slate-900/10 p-6 rounded-2xl border border-slate-800 shadow-lg animate-slide-up">
     <div>
@@ -149,57 +165,131 @@
         </div>
     </div>
 
-    <!-- Diagnostics Column -->
-    <div class="bg-[#0d131f] border border-slate-800 rounded-2xl p-6 shadow-lg">
-        <div class="flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
-            <h3 class="text-md font-bold text-white flex items-center gap-2">
-                <span class="h-2 w-2 rounded-full bg-emerald-555 animate-pulse"></span>
-                Latest Medical Records
-            </h3>
-            <a href="<?php echo e(route('records')); ?>" class="text-xs text-brand-sky hover:text-white font-bold flex items-center gap-1">
-                View All
-                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
-            </a>
-        </div>
-
-        <div class="space-y-3">
-            <?php if($role === 'ADMIN'): ?>
-                <div class="bg-blue-950/20 border border-blue-900/30 text-slate-400 rounded-xl p-4 text-xs text-center">
-                    Use the **Doctor Portal** demo account to create diagnosis records, write clinical reports, and upload files to Cloud Object Storage.
-                </div>
-            <?php elseif(empty($latestRecords) || count($latestRecords) === 0): ?>
-                <div class="text-center py-8 text-slate-500 text-sm">
-                    No diagnosis entries or records found.
-                </div>
-            <?php else: ?>
-                <?php $__currentLoopData = $latestRecords; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $rec): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <div class="bg-[#131a26]/70 border border-slate-800 hover:border-emerald-500/50 p-4 rounded-xl space-y-2.5 transform hover:scale-[1.01] transition-all duration-300 shadow-md">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h4 class="text-sm font-bold text-slate-200"><?php echo e($rec->diagnosis); ?></h4>
-                                <span class="text-[10px] text-slate-400 font-medium">Diagnosed by: <?php echo e($rec->doctor->profile->full_name ?? 'N/A'); ?></span>
-                            </div>
-                            <span class="text-[10px] text-slate-450 font-bold font-mono"><?php echo e(date('M d, Y', strtotime($rec->created_at))); ?></span>
-                        </div>
-                        <p class="text-xs text-slate-300 leading-relaxed font-semibold"><?php echo e($rec->notes); ?></p>
-                        
-                        <?php if($rec->image_url): ?>
-                            <div class="flex items-center gap-2 mt-2 pt-2 border-t border-slate-800">
-                                <svg class="h-4 w-4 text-brand-sky shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                </svg>
-                                <a href="<?php echo e($rec->image_url); ?>" target="_blank" class="text-xs text-brand-sky font-bold hover:underline truncate">
-                                    View Diagnostic Scan File (Cloud Object Link) &rarr;
-                                </a>
-                            </div>
-                        <?php endif; ?>
+    <!-- Right Column (Admin: Add Doctor Form / Doctors & Patients: Medical Records) -->
+    <?php if($role === 'ADMIN'): ?>
+        <!-- Register Doctor Card (Admin only) -->
+        <div class="bg-[#0d131f] border border-slate-800 rounded-2xl p-6 shadow-lg">
+            <div class="flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
+                <h3 class="text-md font-bold text-white flex items-center gap-2">
+                    <svg class="h-5 w-5 text-brand-sky" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Add Doctor to System
+                </h3>
+            </div>
+            
+            <form action="<?php echo e(route('admin.doctors.store')); ?>" method="POST" class="space-y-4">
+                <?php echo csrf_field(); ?>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="name" class="block text-xs font-semibold text-slate-450 uppercase tracking-wider mb-2">Doctor Full Name *</label>
+                        <input type="text" id="name" name="name" required
+                               class="w-full bg-[#131a26] border border-slate-800 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue text-sm"
+                               placeholder="e.g. Dr. Jane Smith (Neurology)">
                     </div>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            <?php endif; ?>
+                    <div>
+                        <label for="email" class="block text-xs font-semibold text-slate-450 uppercase tracking-wider mb-2">Email Address *</label>
+                        <input type="email" id="email" name="email" required
+                               class="w-full bg-[#131a26] border border-slate-800 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue text-sm"
+                               placeholder="e.g. j.smith@slmedicare.lk">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="password" class="block text-xs font-semibold text-slate-455 uppercase tracking-wider mb-2">Account Password *</label>
+                        <input type="password" id="password" name="password" required
+                               class="w-full bg-[#131a26] border border-slate-800 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue text-sm"
+                               placeholder="••••••••">
+                    </div>
+                    <div>
+                        <label for="phone" class="block text-xs font-semibold text-slate-455 uppercase tracking-wider mb-2">Phone Number</label>
+                        <input type="text" id="phone" name="phone"
+                               class="w-full bg-[#131a26] border border-slate-800 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue text-sm"
+                               placeholder="e.g. +94771234567">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="dob" class="block text-xs font-semibold text-slate-455 uppercase tracking-wider mb-2">Date of Birth</label>
+                        <input type="date" id="dob" name="dob"
+                               class="w-full bg-[#131a26] border border-slate-800 rounded-xl px-4 py-2 text-slate-400 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue text-sm">
+                    </div>
+                    <div>
+                        <label for="gender" class="block text-xs font-semibold text-slate-455 uppercase tracking-wider mb-2">Gender</label>
+                        <select id="gender" name="gender"
+                                class="w-full bg-[#131a26] border border-slate-800 rounded-xl px-4 py-2.5 text-slate-400 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue text-sm">
+                            <option value="" class="bg-[#0d131f]">Select</option>
+                            <option value="MALE" class="bg-[#0d131f]">Male</option>
+                            <option value="FEMALE" class="bg-[#0d131f]">Female</option>
+                            <option value="OTHER" class="bg-[#0d131f]">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="address" class="block text-xs font-semibold text-slate-455 uppercase tracking-wider mb-2">Consultation Room / Office</label>
+                    <input type="text" id="address" name="address"
+                           class="w-full bg-[#131a26] border border-slate-800 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue text-sm"
+                           placeholder="e.g. Outpatient Unit Room 402">
+                </div>
+
+                <button type="submit"
+                        class="w-full bg-brand-blue hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow-md transition duration-205 text-sm">
+                    Register Doctor Account
+                </button>
+            </form>
         </div>
-    </div>
+    <?php else: ?>
+        <!-- Diagnostics Column -->
+        <div class="bg-[#0d131f] border border-slate-800 rounded-2xl p-6 shadow-lg">
+            <div class="flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
+                <h3 class="text-md font-bold text-white flex items-center gap-2">
+                    <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Latest Medical Records
+                </h3>
+                <a href="<?php echo e(route('records')); ?>" class="text-xs text-brand-sky hover:text-white font-bold flex items-center gap-1">
+                    View All
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                </a>
+            </div>
+
+            <div class="space-y-3">
+                <?php if(empty($latestRecords) || count($latestRecords) === 0): ?>
+                    <div class="text-center py-8 text-slate-500 text-sm">
+                        No diagnosis entries or records found.
+                    </div>
+                <?php else: ?>
+                    <?php $__currentLoopData = $latestRecords; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $rec): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div class="bg-[#131a26]/70 border border-slate-800 hover:border-emerald-500/50 p-4 rounded-xl space-y-2.5 transform hover:scale-[1.01] transition-all duration-300 shadow-md">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h4 class="text-sm font-bold text-slate-200"><?php echo e($rec->diagnosis); ?></h4>
+                                    <span class="text-[10px] text-slate-400 font-medium">Diagnosed by: <?php echo e($rec->doctor->profile->full_name ?? 'N/A'); ?></span>
+                                </div>
+                                <span class="text-[10px] text-slate-450 font-bold font-mono"><?php echo e(date('M d, Y', strtotime($rec->created_at))); ?></span>
+                            </div>
+                            <p class="text-xs text-slate-300 leading-relaxed font-semibold"><?php echo e($rec->notes); ?></p>
+                            
+                            <?php if($rec->image_url): ?>
+                                <div class="flex items-center gap-2 mt-2 pt-2 border-t border-slate-800">
+                                    <svg class="h-4 w-4 text-brand-sky shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    <a href="<?php echo e($rec->image_url); ?>" target="_blank" class="text-xs text-brand-sky font-bold hover:underline truncate">
+                                        View Diagnostic Scan File (Cloud Object Link) &rarr;
+                                    </a>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <?php endif; ?>
+            </div>
+        </div>
+    <?php endif; ?>
 </div>
 <?php $__env->stopSection(); ?>
 

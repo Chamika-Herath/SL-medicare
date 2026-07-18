@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Profile;
 use App\Models\Appointment;
 use App\Models\MedicalRecord;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -66,5 +69,47 @@ class DashboardController extends Controller
             'role', 'totalPatients', 'totalDoctors', 'totalAppointments', 'totalRecords', 
             'upcomingAppointments', 'latestRecords'
         ));
+    }
+
+    public function addDoctor(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:100',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6',
+            'phone' => 'nullable|string',
+            'dob' => 'nullable|date',
+            'gender' => 'nullable|in:MALE,FEMALE,OTHER',
+            'address' => 'nullable|string',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $user = User::create([
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => 'DOCTOR',
+            ]);
+
+            Profile::create([
+                'user_id' => $user->id,
+                'full_name' => $request->name,
+                'dob' => $request->dob,
+                'gender' => $request->gender,
+                'phone' => $request->phone,
+                'address' => $request->address,
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('dashboard')->with('success', 'Doctor registered successfully in SL Medicare system database.');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withErrors([
+                'error' => 'Failed to register doctor: ' . $e->getMessage(),
+            ]);
+        }
     }
 }

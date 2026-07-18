@@ -47,6 +47,11 @@ Route::middleware(['auth'])->group(function () {
     // Dashboard (Unified Hub)
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    // Add Doctor (Admin only)
+    Route::post('/admin/doctors', [DashboardController::class, 'addDoctor'])
+        ->middleware('role:ADMIN')
+        ->name('admin.doctors.store');
+
     // Appointments Panel
     Route::get('/appointments', [AppointmentController::class, 'index'])->name('appointments');
     
