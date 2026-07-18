@@ -178,7 +178,7 @@
                 <h1 class="text-4xl md:text-5.5xl tracking-tight text-white leading-[1.15] font-sans" style="font-family: 'Poppins', sans-serif;">
                     <span class="font-extrabold block">Communication</span>
                     <span class="font-light text-slate-350">that drives</span>
-                    <span class="font-extrabold bg-gradient-to-r from-brand-sky via-blue-400 to-brand-blue bg-clip-text text-transparent block">healthcare innovation..</span>
+                    <span class="font-extrabold bg-gradient-to-r from-brand-sky via-blue-400 to-brand-blue bg-clip-text text-transparent block">healthcare innovation.</span>
                 </h1>
                 
                 <p class="text-sm md:text-md text-slate-400 font-medium max-w-xl leading-relaxed">
