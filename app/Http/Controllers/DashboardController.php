@@ -24,6 +24,8 @@ class DashboardController extends Controller
         $totalRecords = 0;
         $upcomingAppointments = [];
         $latestRecords = [];
+        $doctorsList = [];
+        $patientsList = [];
 
         if ($role === 'ADMIN') {
             $totalPatients = User::where('role', 'PATIENT')->count();
@@ -35,6 +37,9 @@ class DashboardController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->limit(5)
                 ->get();
+
+            $doctorsList = User::where('role', 'DOCTOR')->with('profile')->orderBy('created_at', 'desc')->get();
+            $patientsList = User::where('role', 'PATIENT')->with('profile')->orderBy('created_at', 'desc')->get();
         } elseif ($role === 'DOCTOR') {
             $totalAppointments = Appointment::where('doctor_id', $user->id)->count();
             $totalPatients = Appointment::where('doctor_id', $user->id)->distinct('patient_id')->count();
@@ -67,7 +72,7 @@ class DashboardController extends Controller
 
         return view('dashboard', compact(
             'role', 'totalPatients', 'totalDoctors', 'totalAppointments', 'totalRecords', 
-            'upcomingAppointments', 'latestRecords'
+            'upcomingAppointments', 'latestRecords', 'doctorsList', 'patientsList'
         ));
     }
 

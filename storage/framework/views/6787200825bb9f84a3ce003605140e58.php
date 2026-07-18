@@ -291,6 +291,77 @@
         </div>
     <?php endif; ?>
 </div>
+
+<?php if($role === 'ADMIN'): ?>
+<!-- Admin System Directory (Lists of Doctors and Patients) -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-6 border-t border-slate-800">
+    
+    <!-- Registered Doctors List -->
+    <div class="bg-[#0d131f] border border-slate-800 rounded-2xl p-6 shadow-lg">
+        <h3 class="text-md font-bold text-white mb-4 flex items-center gap-2 pb-3 border-b border-slate-800">
+            <svg class="h-5 w-5 text-brand-sky" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            Registered Medical Consultants (Doctors)
+        </h3>
+        
+        <div class="space-y-3 max-h-96 overflow-y-auto pr-1">
+            <?php if(empty($doctorsList) || count($doctorsList) === 0): ?>
+                <p class="text-xs text-slate-500 text-center py-4">No doctors registered in the database.</p>
+            <?php else: ?>
+                <?php $__currentLoopData = $doctorsList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $doc): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="bg-[#131a26]/70 border border-slate-800 p-3.5 rounded-xl flex items-center justify-between gap-4">
+                        <div class="truncate">
+                            <span class="text-sm font-bold text-slate-200 block truncate"><?php echo e($doc->profile->full_name ?? 'N/A'); ?></span>
+                            <span class="text-[10px] text-slate-450 block truncate">Email: <?php echo e($doc->email); ?></span>
+                            <span class="text-[10px] text-slate-450 block">Phone: <?php echo e($doc->profile->phone ?? 'N/A'); ?></span>
+                        </div>
+                        <div class="text-right shrink-0">
+                            <span class="text-[9px] bg-blue-500/10 text-brand-sky font-extrabold px-2 py-0.5 rounded border border-blue-500/20 uppercase tracking-wider block mb-1">
+                                MD / Specialist
+                            </span>
+                            <span class="text-[9px] text-slate-500 font-semibold block"><?php echo e($doc->profile->address ?? 'N/A'); ?></span>
+                        </div>
+                    </div>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <!-- Registered Patients List -->
+    <div class="bg-[#0d131f] border border-slate-800 rounded-2xl p-6 shadow-lg">
+        <h3 class="text-md font-bold text-white mb-4 flex items-center gap-2 pb-3 border-b border-slate-800">
+            <svg class="h-5 w-5 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            Registered Patient Database
+        </h3>
+
+        <div class="space-y-3 max-h-96 overflow-y-auto pr-1">
+            <?php if(empty($patientsList) || count($patientsList) === 0): ?>
+                <p class="text-xs text-slate-500 text-center py-4">No patients registered in the database.</p>
+            <?php else: ?>
+                <?php $__currentLoopData = $patientsList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="bg-[#131a26]/70 border border-slate-800 p-3.5 rounded-xl flex items-center justify-between gap-4">
+                        <div class="truncate">
+                            <span class="text-sm font-bold text-slate-200 block truncate"><?php echo e($pat->profile->full_name ?? 'N/A'); ?></span>
+                            <span class="text-[10px] text-slate-450 block truncate">Email: <?php echo e($pat->email); ?></span>
+                            <span class="text-[10px] text-slate-450 block">Phone: <?php echo e($pat->profile->phone ?? 'N/A'); ?></span>
+                        </div>
+                        <div class="text-right shrink-0">
+                            <span class="text-[9px] bg-teal-500/10 text-teal-400 font-extrabold px-2 py-0.5 rounded border border-teal-500/20 uppercase tracking-wider block mb-1">
+                                Patient (RBAC)
+                            </span>
+                            <span class="text-[9px] text-slate-500 font-semibold block">DOB: <?php echo e($pat->profile->dob ?? 'N/A'); ?></span>
+                        </div>
+                    </div>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <?php endif; ?>
+        </div>
+    </div>
+
+</div>
+<?php endif; ?>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.portal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\hmcdi\OneDrive\Documents\GITHUB\SL-medicare\resources\views/dashboard.blade.php ENDPATH**/ ?>
