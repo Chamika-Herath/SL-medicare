@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Profile;
 use App\Models\Appointment;
 use App\Models\MedicalRecord;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -21,6 +24,8 @@ class DashboardController extends Controller
         $totalRecords = 0;
         $upcomingAppointments = [];
         $latestRecords = [];
+        $doctorsList = [];
+        $patientsList = [];
 
         if ($role === 'ADMIN') {
             $totalPatients = User::where('role', 'PATIENT')->count();
@@ -32,6 +37,9 @@ class DashboardController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->limit(5)
                 ->get();
+
+            $doctorsList = User::where('role', 'DOCTOR')->with('profile')->orderBy('created_at', 'desc')->get();
+            $patientsList = User::where('role', 'PATIENT')->with('profile')->orderBy('created_at', 'desc')->get();
         } elseif ($role === 'DOCTOR') {
             $totalAppointments = Appointment::where('doctor_id', $user->id)->count();
             $totalPatients = Appointment::where('doctor_id', $user->id)->distinct('patient_id')->count();
@@ -64,7 +72,67 @@ class DashboardController extends Controller
 
         return view('dashboard', compact(
             'role', 'totalPatients', 'totalDoctors', 'totalAppointments', 'totalRecords', 
-            'upcomingAppointments', 'latestRecords'
+            'upcomingAppointments', 'latestRecords', 'doctorsList', 'patientsList'
         ));
+    }
+
+    public function addDoctor(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:100',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6',
+            'phone' => 'nullable|string',
+            'dob' => 'nullable|date',
+            'gender' => 'nullable|in:MALE,FEMALE,OTHER',
+            'address' => 'nullable|string',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $user = User::create([
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => 'DOCTOR',
+            ]);
+
+            Profile::create([
+                'user_id' => $user->id,
+                'full_name' => $request->name,
+                'dob' => $request->dob,
+                'gender' => $request->gender,
+                'phone' => $request->phone,
+                'address' => $request->address,
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('dashboard')->with('success', 'Doctor registered successfully in SL Medicare system database.');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withErrors([
+                'error' => 'Failed to register doctor: ' . $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function showDoctors()
+    {
+        $user = Auth::user();
+        $role = $user->role;
+        $fullName = $user->profile->full_name ?? 'HMS Admin';
+        $doctorsList = User::where('role', 'DOCTOR')->with('profile')->orderBy('created_at', 'desc')->get();
+        return view('admin.doctors', compact('role', 'fullName', 'doctorsList'));
+    }
+
+    public function showPatients()
+    {
+        $user = Auth::user();
+        $role = $user->role;
+        $fullName = $user->profile->full_name ?? 'HMS Admin';
+        $patientsList = User::where('role', 'PATIENT')->with('profile')->orderBy('created_at', 'desc')->get();
+        return view('admin.patients', compact('role', 'fullName', 'patientsList'));
     }
 }

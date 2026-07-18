@@ -170,4 +170,44 @@ class MedicalRecordController extends Controller
             return null;
         }
     }
+
+    public function searchPatients(Request $request)
+    {
+        $user = Auth::user();
+        $role = $user->role;
+        
+        $search = $request->input('search');
+        
+        // Fetch patient profiles matching search or load all patients
+        $query = User::where('role', 'PATIENT')->with('profile');
+        
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('email', 'like', "%{$search}%")
+                  ->orWhereHas('profile', function($pq) use ($search) {
+                      $pq->where('full_name', 'like', "%{$search}%")
+                        ->orWhere('phone', 'like', "%{$search}%");
+                  });
+            });
+        }
+        
+        $patients = $query->orderBy('created_at', 'desc')->get();
+        
+        // Load details & medical history if a specific patient is selected
+        $selectedPatient = null;
+        $patientRecords = [];
+        $selectedPatientId = $request->input('patient_id');
+        
+        if ($selectedPatientId) {
+            $selectedPatient = User::where('id', $selectedPatientId)->where('role', 'PATIENT')->with('profile')->first();
+            if ($selectedPatient) {
+                $patientRecords = MedicalRecord::where('patient_id', $selectedPatientId)
+                    ->with('doctor.profile')
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            }
+        }
+        
+        return view('doctor.patient_search', compact('patients', 'selectedPatient', 'patientRecords', 'role', 'search'));
+    }
 }

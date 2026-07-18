@@ -183,4 +183,18 @@ class AppointmentController extends Controller
             ]
         ], 201);
     }
+
+    public function history()
+    {
+        $user = Auth::user();
+        $role = $user->role;
+        
+        // Fetch all appointments (both upcoming and past) for this doctor
+        $appointments = Appointment::where('doctor_id', $user->id)
+            ->with(['patient.profile'])
+            ->orderBy('appointment_date', 'desc')
+            ->get();
+            
+        return view('doctor.appointments_history', compact('appointments', 'role'));
+    }
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title') - SL Medicare Portal</title>
+    <title><?php echo $__env->yieldContent('title'); ?> - SL Medicare Portal</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -52,12 +52,12 @@
         <!-- ========================================== -->
         <!-- SIDEBAR NAVIGATION (Dark Theme)           -->
         <!-- ========================================== -->
-        @php
+        <?php
             $current_page = Route::currentRouteName();
             $user = Auth::user();
             $role = $user->role ?? 'PATIENT';
             $fullName = $user->profile->full_name ?? 'HMS User';
-        @endphp
+        ?>
         <aside class="w-64 bg-[#0d131f] border-r border-slate-800/80 flex flex-col justify-between shrink-0 hidden md:flex min-h-screen shadow-lg">
             <div>
                 <!-- Brand logo (Hexagon Heartbeat Logo) -->
@@ -76,15 +76,15 @@
                     </div>
                     <div>
                         <span class="font-extrabold text-sm text-white block">SL Medicare</span>
-                        <span class="text-[9px] text-hospital-500 font-bold uppercase tracking-wider">{{ $role }} Portal</span>
+                        <span class="text-[9px] text-hospital-500 font-bold uppercase tracking-wider"><?php echo e($role); ?> Portal</span>
                     </div>
                 </div>
 
                 <!-- Navigation Links -->
                 <nav class="p-4 space-y-2">
-                    @if ($role === 'ADMIN')
+                    <?php if($role === 'ADMIN'): ?>
                         <!-- Admin Dashboard Link -->
-                        <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 {{ $current_page === 'dashboard' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white' }}">
+                        <a href="<?php echo e(route('dashboard')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 <?php echo e($current_page === 'dashboard' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'); ?>">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" />
                             </svg>
@@ -92,7 +92,7 @@
                         </a>
 
                         <!-- Admin Doctor Registry Link -->
-                        <a href="{{ route('admin.doctors') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 {{ $current_page === 'admin.doctors' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white' }}">
+                        <a href="<?php echo e(route('admin.doctors')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 <?php echo e($current_page === 'admin.doctors' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'); ?>">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                             </svg>
@@ -100,7 +100,7 @@
                         </a>
 
                         <!-- Admin Patient Registry Link -->
-                        <a href="{{ route('admin.patients') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 {{ $current_page === 'admin.patients' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white' }}">
+                        <a href="<?php echo e(route('admin.patients')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 <?php echo e($current_page === 'admin.patients' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'); ?>">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                             </svg>
@@ -108,16 +108,16 @@
                         </a>
 
                         <!-- Admin Appointments Link -->
-                        <a href="{{ route('appointments') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 {{ $current_page === 'appointments' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white' }}">
+                        <a href="<?php echo e(route('appointments')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 <?php echo e($current_page === 'appointments' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'); ?>">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
                             <span class="text-sm font-medium">Appointments</span>
                         </a>
 
-                    @elseif ($role === 'DOCTOR')
+                    <?php elseif($role === 'DOCTOR'): ?>
                         <!-- Doctor Dashboard Link -->
-                        <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 {{ $current_page === 'dashboard' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white' }}">
+                        <a href="<?php echo e(route('dashboard')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 <?php echo e($current_page === 'dashboard' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'); ?>">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" />
                             </svg>
@@ -125,7 +125,7 @@
                         </a>
 
                         <!-- Doctor Appointment History Link -->
-                        <a href="{{ route('doctor.appointments') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 {{ $current_page === 'doctor.appointments' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white' }}">
+                        <a href="<?php echo e(route('doctor.appointments')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 <?php echo e($current_page === 'doctor.appointments' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'); ?>">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
@@ -133,7 +133,7 @@
                         </a>
 
                         <!-- Doctor Patient Search Link -->
-                        <a href="{{ route('doctor.patients') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 {{ $current_page === 'doctor.patients' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white' }}">
+                        <a href="<?php echo e(route('doctor.patients')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 <?php echo e($current_page === 'doctor.patients' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'); ?>">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                             </svg>
@@ -141,16 +141,16 @@
                         </a>
 
                         <!-- Doctor Manage Records Link -->
-                        <a href="{{ route('records') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 {{ $current_page === 'records' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white' }}">
+                        <a href="<?php echo e(route('records')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 <?php echo e($current_page === 'records' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'); ?>">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
                             <span class="text-sm font-medium">Add Medical Record</span>
                         </a>
 
-                    @else
+                    <?php else: ?>
                         <!-- Patient Dashboard Link -->
-                        <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 {{ $current_page === 'dashboard' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white' }}">
+                        <a href="<?php echo e(route('dashboard')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 <?php echo e($current_page === 'dashboard' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'); ?>">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" />
                             </svg>
@@ -158,7 +158,7 @@
                         </a>
 
                         <!-- Patient Book Appointment Link -->
-                        <a href="{{ route('appointments') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 {{ $current_page === 'appointments' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white' }}">
+                        <a href="<?php echo e(route('appointments')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 <?php echo e($current_page === 'appointments' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'); ?>">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
@@ -166,13 +166,13 @@
                         </a>
 
                         <!-- Patient My History Link -->
-                        <a href="{{ route('records') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 {{ $current_page === 'records' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white' }}">
+                        <a href="<?php echo e(route('records')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition duration-200 <?php echo e($current_page === 'records' ? 'bg-hospital-500/10 text-white border-l-4 border-hospital-500 font-semibold' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'); ?>">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
                             <span class="text-sm font-medium">My Medical History</span>
                         </a>
-                    @endif
+                    <?php endif; ?>
                 </nav>
             </div>
 
@@ -180,13 +180,14 @@
             <div class="p-4 border-t border-slate-800/80">
                 <div class="bg-[#121926]/80 p-3 rounded-xl border border-slate-800 flex items-center justify-between">
                     <div class="truncate mr-2">
-                        <p class="text-xs font-semibold text-slate-200 truncate">{{ $fullName }}</p>
+                        <p class="text-xs font-semibold text-slate-200 truncate"><?php echo e($fullName); ?></p>
                         <span class="text-[9px] bg-blue-500/20 text-brand-sky font-extrabold px-1.5 py-0.5 rounded uppercase mt-0.5 inline-block border border-blue-500/20">
-                            {{ $role }}
+                            <?php echo e($role); ?>
+
                         </span>
                     </div>
-                    <form action="{{ route('logout') }}" method="POST" class="inline">
-                        @csrf
+                    <form action="<?php echo e(route('logout')); ?>" method="POST" class="inline">
+                        <?php echo csrf_field(); ?>
                         <button type="submit" title="Log Out" class="text-slate-400 hover:text-red-400 transition align-middle">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -222,11 +223,12 @@
                     <div class="h-8 w-px bg-slate-800"></div>
                     <div class="flex items-center gap-2.5">
                         <div class="h-8 w-8 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-brand-sky font-bold text-sm">
-                            {{ strtoupper(substr($fullName, 0, 1)) }}
+                            <?php echo e(strtoupper(substr($fullName, 0, 1))); ?>
+
                         </div>
                         <div class="text-left hidden sm:block">
-                            <p class="text-xs font-semibold text-slate-200 leading-none">{{ $fullName }}</p>
-                            <span class="text-[9px] text-slate-400 uppercase leading-none font-bold">{{ $role }}</span>
+                            <p class="text-xs font-semibold text-slate-200 leading-none"><?php echo e($fullName); ?></p>
+                            <span class="text-[9px] text-slate-400 uppercase leading-none font-bold"><?php echo e($role); ?></span>
                         </div>
                     </div>
                 </div>
@@ -234,7 +236,7 @@
 
             <!-- Core Viewport -->
             <main class="flex-1 overflow-y-auto p-6 space-y-6">
-                @yield('content')
+                <?php echo $__env->yieldContent('content'); ?>
             </main>
         </div>
     </div>
@@ -263,9 +265,9 @@
             </div>
 
             <nav class="p-4 space-y-2">
-                @if ($role === 'ADMIN')
+                <?php if($role === 'ADMIN'): ?>
                     <!-- Admin Dashboard Link -->
-                    <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
+                    <a href="<?php echo e(route('dashboard')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" />
                         </svg>
@@ -273,7 +275,7 @@
                     </a>
 
                     <!-- Admin Doctor Registry Link -->
-                    <a href="{{ route('admin.doctors') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
+                    <a href="<?php echo e(route('admin.doctors')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
@@ -281,7 +283,7 @@
                     </a>
 
                     <!-- Admin Patient Registry Link -->
-                    <a href="{{ route('admin.patients') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
+                    <a href="<?php echo e(route('admin.patients')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                         </svg>
@@ -289,16 +291,16 @@
                     </a>
 
                     <!-- Admin Appointments Link -->
-                    <a href="{{ route('appointments') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
+                    <a href="<?php echo e(route('appointments')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
                         <span class="text-sm font-medium">Appointments</span>
                     </a>
 
-                @elseif ($role === 'DOCTOR')
+                <?php elseif($role === 'DOCTOR'): ?>
                     <!-- Doctor Dashboard Link -->
-                    <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
+                    <a href="<?php echo e(route('dashboard')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" />
                         </svg>
@@ -306,7 +308,7 @@
                     </a>
 
                     <!-- Doctor Appointment History Link -->
-                    <a href="{{ route('doctor.appointments') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
+                    <a href="<?php echo e(route('doctor.appointments')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
@@ -314,7 +316,7 @@
                     </a>
 
                     <!-- Doctor Patient Search Link -->
-                    <a href="{{ route('doctor.patients') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
+                    <a href="<?php echo e(route('doctor.patients')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
@@ -322,16 +324,16 @@
                     </a>
 
                     <!-- Doctor Manage Records Link -->
-                    <a href="{{ route('records') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
+                    <a href="<?php echo e(route('records')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
                         <span class="text-sm font-medium">Add Medical Record</span>
                     </a>
 
-                @else
+                <?php else: ?>
                     <!-- Patient Dashboard Link -->
-                    <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
+                    <a href="<?php echo e(route('dashboard')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" />
                         </svg>
@@ -339,7 +341,7 @@
                     </a>
 
                     <!-- Patient Book Appointment Link -->
-                    <a href="{{ route('appointments') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
+                    <a href="<?php echo e(route('appointments')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
@@ -347,19 +349,19 @@
                     </a>
 
                     <!-- Patient My History Link -->
-                    <a href="{{ route('records') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
+                    <a href="<?php echo e(route('records')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
                         <span class="text-sm font-medium">My Medical History</span>
                     </a>
-                @endif
+                <?php endif; ?>
             </nav>
         </div>
         
         <div class="p-4 border-t border-slate-800">
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
+            <form action="<?php echo e(route('logout')); ?>" method="POST">
+                <?php echo csrf_field(); ?>
                 <button type="submit" class="flex items-center justify-center gap-2 w-full bg-red-950/20 hover:bg-red-950/40 text-red-400 py-3 rounded-xl border border-red-900/30 text-sm font-semibold transition">
                     Log Out
                 </button>
@@ -385,3 +387,4 @@
     </script>
 </body>
 </html>
+<?php /**PATH C:\Users\hmcdi\OneDrive\Documents\GITHUB\SL-medicare\resources\views/layouts/portal.blade.php ENDPATH**/ ?>

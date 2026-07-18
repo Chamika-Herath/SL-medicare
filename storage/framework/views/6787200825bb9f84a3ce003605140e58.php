@@ -1,28 +1,28 @@
-@extends('layouts.portal')
+<?php $__env->startSection('title', 'Dashboard'); ?>
 
-@section('title', 'Dashboard')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <!-- Alert Messages -->
-@if (session('success'))
+<?php if(session('success')): ?>
     <div class="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-xl p-4 text-sm mb-6 flex items-center gap-2 shadow animate-fade-in">
         <span class="h-2 w-2 rounded-full bg-emerald-400 animate-ping"></span>
-        <span class="font-bold">Success:</span> {{ session('success') }}
+        <span class="font-bold">Success:</span> <?php echo e(session('success')); ?>
+
     </div>
-@endif
-@if ($errors->any())
+<?php endif; ?>
+<?php if($errors->any()): ?>
     <div class="bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl p-4 text-sm mb-6 flex items-center gap-2 shadow animate-fade-in">
         <span class="h-2 w-2 rounded-full bg-red-400 animate-pulse"></span>
-        <span class="font-bold">Error:</span> {{ $errors->first() }}
+        <span class="font-bold">Error:</span> <?php echo e($errors->first()); ?>
+
     </div>
-@endif
+<?php endif; ?>
 
 <!-- Welcome banner (With sliding entrance animation and dark layout) -->
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-blue-900/40 to-slate-900/10 p-6 rounded-2xl border border-slate-800 shadow-lg animate-slide-up">
     <div>
         <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
             <span class="h-3 w-3 rounded-full bg-blue-500 animate-ping"></span>
-            Welcome back, {{ Auth::user()->profile->full_name ?? 'HMS User' }}!
+            Welcome back, <?php echo e(Auth::user()->profile->full_name ?? 'HMS User'); ?>!
         </h1>
         <p class="text-sm text-slate-400 mt-1">
             You are securely connected to the SL Medicare cloud portal node.
@@ -30,7 +30,8 @@
     </div>
     <div>
         <span class="text-xs bg-blue-950/60 text-brand-sky font-extrabold px-3 py-1.5 rounded-xl border border-blue-900/40 uppercase tracking-wider shadow-sm">
-            Role: {{ $role }}
+            Role: <?php echo e($role); ?>
+
         </span>
     </div>
 </div>
@@ -46,12 +47,12 @@
         </div>
         <div>
             <span class="text-[10px] text-slate-450 block font-bold uppercase tracking-wider">Patients</span>
-            <span class="text-2xl font-bold text-white">{{ $totalPatients }}</span>
+            <span class="text-2xl font-bold text-white"><?php echo e($totalPatients); ?></span>
         </div>
     </div>
 
     <!-- Card 2: Records (Emerald/Green) -->
-    @if ($role === 'ADMIN')
+    <?php if($role === 'ADMIN'): ?>
     <div class="bg-[#0d131f] border-l-4 border-indigo-500 border-t border-r border-b border-slate-800 p-5 rounded-2xl shadow-md flex items-center gap-4 hover:scale-[1.03] hover:border-indigo-500/50 hover:shadow-lg transition-all duration-300">
         <div class="p-3 bg-indigo-950/40 border border-indigo-900/50 text-indigo-400 rounded-xl">
             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -60,10 +61,10 @@
         </div>
         <div>
             <span class="text-[10px] text-slate-450 block font-bold uppercase tracking-wider">Doctors</span>
-            <span class="text-2xl font-bold text-white">{{ $totalDoctors }}</span>
+            <span class="text-2xl font-bold text-white"><?php echo e($totalDoctors); ?></span>
         </div>
     </div>
-    @else
+    <?php else: ?>
     <div class="bg-[#0d131f] border-l-4 border-emerald-500 border-t border-r border-b border-slate-800 p-5 rounded-2xl shadow-md flex items-center gap-4 hover:scale-[1.03] hover:border-emerald-500/50 hover:shadow-lg transition-all duration-300">
         <div class="p-3 bg-emerald-950/40 border border-emerald-900/50 text-emerald-400 rounded-xl">
             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -72,10 +73,10 @@
         </div>
         <div>
             <span class="text-[10px] text-slate-455 block font-bold uppercase tracking-wider">My Records</span>
-            <span class="text-2xl font-bold text-white">{{ $totalRecords }}</span>
+            <span class="text-2xl font-bold text-white"><?php echo e($totalRecords); ?></span>
         </div>
     </div>
-    @endif
+    <?php endif; ?>
 
     <!-- Card 3: Appointments (Orange/Amber) -->
     <div class="bg-[#0d131f] border-l-4 border-orange-500 border-t border-r border-b border-slate-800 p-5 rounded-2xl shadow-md flex items-center gap-4 hover:scale-[1.03] hover:border-orange-500/50 hover:shadow-lg transition-all duration-300">
@@ -86,7 +87,7 @@
         </div>
         <div>
             <span class="text-[10px] text-slate-455 block font-bold uppercase tracking-wider">Appointments</span>
-            <span class="text-2xl font-bold text-white">{{ $totalAppointments }}</span>
+            <span class="text-2xl font-bold text-white"><?php echo e($totalAppointments); ?></span>
         </div>
     </div>
 
@@ -113,7 +114,7 @@
                 <span class="h-2 w-2 rounded-full bg-blue-500 animate-pulse"></span>
                 Upcoming Appointments
             </h3>
-            <a href="{{ route('appointments') }}" class="text-xs text-brand-sky hover:text-white font-bold flex items-center gap-1">
+            <a href="<?php echo e(route('appointments')); ?>" class="text-xs text-brand-sky hover:text-white font-bold flex items-center gap-1">
                 Manage
                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
@@ -122,47 +123,50 @@
         </div>
         
         <div class="space-y-3 flex-1">
-            @if (empty($upcomingAppointments) || count($upcomingAppointments) === 0)
+            <?php if(empty($upcomingAppointments) || count($upcomingAppointments) === 0): ?>
                 <div class="text-center py-8 text-slate-500 text-sm">
                     No upcoming appointments found.
                 </div>
-            @else
-                @foreach ($upcomingAppointments as $appt)
+            <?php else: ?>
+                <?php $__currentLoopData = $upcomingAppointments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $appt): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="bg-[#131a26]/70 border border-slate-800 hover:border-blue-500/50 p-4 rounded-xl flex justify-between items-start gap-4 transform hover:scale-[1.01] transition-all duration-300 shadow-md">
                         <div class="space-y-1">
                             <div class="text-xs font-semibold text-brand-sky flex items-center gap-1.5">
                                 <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
-                                {{ date('M d, Y - h:i A', strtotime($appt->appointment_date)) }}
+                                <?php echo e(date('M d, Y - h:i A', strtotime($appt->appointment_date))); ?>
+
                             </div>
                             <p class="text-sm font-bold text-slate-200">
-                                @if ($role === 'DOCTOR')
-                                    Patient: {{ $appt->patient->profile->full_name ?? 'N/A' }}
-                                @elseif ($role === 'PATIENT')
-                                    Doctor: {{ $appt->doctor->profile->full_name ?? 'N/A' }}
-                                @else
-                                    {{ $appt->patient->profile->full_name ?? 'N/A' }} &harr; {{ $appt->doctor->profile->full_name ?? 'N/A' }}
-                                @endif
+                                <?php if($role === 'DOCTOR'): ?>
+                                    Patient: <?php echo e($appt->patient->profile->full_name ?? 'N/A'); ?>
+
+                                <?php elseif($role === 'PATIENT'): ?>
+                                    Doctor: <?php echo e($appt->doctor->profile->full_name ?? 'N/A'); ?>
+
+                                <?php else: ?>
+                                    <?php echo e($appt->patient->profile->full_name ?? 'N/A'); ?> &harr; <?php echo e($appt->doctor->profile->full_name ?? 'N/A'); ?>
+
+                                <?php endif; ?>
                             </p>
-                            <p class="text-xs text-slate-400 italic font-medium">"{{ $appt->reason }}"</p>
+                            <p class="text-xs text-slate-400 italic font-medium">"<?php echo e($appt->reason); ?>"</p>
                         </div>
                         <div>
-                            <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider {{ 
-                                $appt->status === 'APPROVED' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 
-                                    ($appt->status === 'PENDING' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'bg-red-500/10 text-red-400 border border-red-500/20') 
-                            }}">
-                                {{ $appt->status }}
+                            <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider <?php echo e($appt->status === 'APPROVED' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 
+                                    ($appt->status === 'PENDING' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'bg-red-500/10 text-red-400 border border-red-500/20')); ?>">
+                                <?php echo e($appt->status); ?>
+
                             </span>
                         </div>
                     </div>
-                @endforeach
-            @endif
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <?php endif; ?>
         </div>
     </div>
 
     <!-- Right Column (Admin: Add Doctor Form / Doctors & Patients: Medical Records) -->
-    @if ($role === 'ADMIN')
+    <?php if($role === 'ADMIN'): ?>
         <!-- Register Doctor Card (Admin only) -->
         <div class="bg-[#0d131f] border border-slate-800 rounded-2xl p-6 shadow-lg">
             <div class="flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
@@ -174,8 +178,8 @@
                 </h3>
             </div>
             
-            <form action="{{ route('admin.doctors.store') }}" method="POST" class="space-y-4">
-                @csrf
+            <form action="<?php echo e(route('admin.doctors.store')); ?>" method="POST" class="space-y-4">
+                <?php echo csrf_field(); ?>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label for="name" class="block text-xs font-semibold text-slate-450 uppercase tracking-wider mb-2">Doctor Full Name *</label>
@@ -237,7 +241,7 @@
                 </button>
             </form>
         </div>
-    @else
+    <?php else: ?>
         <!-- Diagnostics Column -->
         <div class="bg-[#0d131f] border border-slate-800 rounded-2xl p-6 shadow-lg">
             <div class="flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
@@ -245,7 +249,7 @@
                     <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
                     Latest Medical Records
                 </h3>
-                <a href="{{ route('records') }}" class="text-xs text-brand-sky hover:text-white font-bold flex items-center gap-1">
+                <a href="<?php echo e(route('records')); ?>" class="text-xs text-brand-sky hover:text-white font-bold flex items-center gap-1">
                     View All
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
@@ -254,41 +258,41 @@
             </div>
 
             <div class="space-y-3">
-                @if (empty($latestRecords) || count($latestRecords) === 0)
+                <?php if(empty($latestRecords) || count($latestRecords) === 0): ?>
                     <div class="text-center py-8 text-slate-500 text-sm">
                         No diagnosis entries or records found.
                     </div>
-                @else
-                    @foreach ($latestRecords as $rec)
+                <?php else: ?>
+                    <?php $__currentLoopData = $latestRecords; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $rec): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="bg-[#131a26]/70 border border-slate-800 hover:border-emerald-500/50 p-4 rounded-xl space-y-2.5 transform hover:scale-[1.01] transition-all duration-300 shadow-md">
                             <div class="flex justify-between items-start">
                                 <div>
-                                    <h4 class="text-sm font-bold text-slate-200">{{ $rec->diagnosis }}</h4>
-                                    <span class="text-[10px] text-slate-400 font-medium">Diagnosed by: {{ $rec->doctor->profile->full_name ?? 'N/A' }}</span>
+                                    <h4 class="text-sm font-bold text-slate-200"><?php echo e($rec->diagnosis); ?></h4>
+                                    <span class="text-[10px] text-slate-400 font-medium">Diagnosed by: <?php echo e($rec->doctor->profile->full_name ?? 'N/A'); ?></span>
                                 </div>
-                                <span class="text-[10px] text-slate-450 font-bold font-mono">{{ date('M d, Y', strtotime($rec->created_at)) }}</span>
+                                <span class="text-[10px] text-slate-450 font-bold font-mono"><?php echo e(date('M d, Y', strtotime($rec->created_at))); ?></span>
                             </div>
-                            <p class="text-xs text-slate-300 leading-relaxed font-semibold">{{ $rec->notes }}</p>
+                            <p class="text-xs text-slate-300 leading-relaxed font-semibold"><?php echo e($rec->notes); ?></p>
                             
-                            @if ($rec->image_url)
+                            <?php if($rec->image_url): ?>
                                 <div class="flex items-center gap-2 mt-2 pt-2 border-t border-slate-800">
                                     <svg class="h-4 w-4 text-brand-sky shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                     </svg>
-                                    <a href="{{ $rec->image_url }}" target="_blank" class="text-xs text-brand-sky font-bold hover:underline truncate">
+                                    <a href="<?php echo e($rec->image_url); ?>" target="_blank" class="text-xs text-brand-sky font-bold hover:underline truncate">
                                         View Diagnostic Scan File (Cloud Object Link) &rarr;
                                     </a>
                                 </div>
-                            @endif
+                            <?php endif; ?>
                         </div>
-                    @endforeach
-                @endif
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <?php endif; ?>
             </div>
         </div>
-    @endif
+    <?php endif; ?>
 </div>
 
-@if ($role === 'ADMIN')
+<?php if($role === 'ADMIN'): ?>
 <!-- Admin System Directory (Lists of Doctors and Patients) -->
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-6 border-t border-slate-800">
     
@@ -302,25 +306,25 @@
         </h3>
         
         <div class="space-y-3 max-h-96 overflow-y-auto pr-1">
-            @if (empty($doctorsList) || count($doctorsList) === 0)
+            <?php if(empty($doctorsList) || count($doctorsList) === 0): ?>
                 <p class="text-xs text-slate-500 text-center py-4">No doctors registered in the database.</p>
-            @else
-                @foreach ($doctorsList as $doc)
+            <?php else: ?>
+                <?php $__currentLoopData = $doctorsList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $doc): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="bg-[#131a26]/70 border border-slate-800 p-3.5 rounded-xl flex items-center justify-between gap-4">
                         <div class="truncate">
-                            <span class="text-sm font-bold text-slate-200 block truncate">{{ $doc->profile->full_name ?? 'N/A' }}</span>
-                            <span class="text-[10px] text-slate-450 block truncate">Email: {{ $doc->email }}</span>
-                            <span class="text-[10px] text-slate-450 block">Phone: {{ $doc->profile->phone ?? 'N/A' }}</span>
+                            <span class="text-sm font-bold text-slate-200 block truncate"><?php echo e($doc->profile->full_name ?? 'N/A'); ?></span>
+                            <span class="text-[10px] text-slate-450 block truncate">Email: <?php echo e($doc->email); ?></span>
+                            <span class="text-[10px] text-slate-450 block">Phone: <?php echo e($doc->profile->phone ?? 'N/A'); ?></span>
                         </div>
                         <div class="text-right shrink-0">
                             <span class="text-[9px] bg-blue-500/10 text-brand-sky font-extrabold px-2 py-0.5 rounded border border-blue-500/20 uppercase tracking-wider block mb-1">
                                 MD / Specialist
                             </span>
-                            <span class="text-[9px] text-slate-500 font-semibold block">{{ $doc->profile->address ?? 'N/A' }}</span>
+                            <span class="text-[9px] text-slate-500 font-semibold block"><?php echo e($doc->profile->address ?? 'N/A'); ?></span>
                         </div>
                     </div>
-                @endforeach
-            @endif
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <?php endif; ?>
         </div>
     </div>
 
@@ -334,28 +338,30 @@
         </h3>
 
         <div class="space-y-3 max-h-96 overflow-y-auto pr-1">
-            @if (empty($patientsList) || count($patientsList) === 0)
+            <?php if(empty($patientsList) || count($patientsList) === 0): ?>
                 <p class="text-xs text-slate-500 text-center py-4">No patients registered in the database.</p>
-            @else
-                @foreach ($patientsList as $pat)
+            <?php else: ?>
+                <?php $__currentLoopData = $patientsList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="bg-[#131a26]/70 border border-slate-800 p-3.5 rounded-xl flex items-center justify-between gap-4">
                         <div class="truncate">
-                            <span class="text-sm font-bold text-slate-200 block truncate">{{ $pat->profile->full_name ?? 'N/A' }}</span>
-                            <span class="text-[10px] text-slate-450 block truncate">Email: {{ $pat->email }}</span>
-                            <span class="text-[10px] text-slate-450 block">Phone: {{ $pat->profile->phone ?? 'N/A' }}</span>
+                            <span class="text-sm font-bold text-slate-200 block truncate"><?php echo e($pat->profile->full_name ?? 'N/A'); ?></span>
+                            <span class="text-[10px] text-slate-450 block truncate">Email: <?php echo e($pat->email); ?></span>
+                            <span class="text-[10px] text-slate-450 block">Phone: <?php echo e($pat->profile->phone ?? 'N/A'); ?></span>
                         </div>
                         <div class="text-right shrink-0">
                             <span class="text-[9px] bg-teal-500/10 text-teal-400 font-extrabold px-2 py-0.5 rounded border border-teal-500/20 uppercase tracking-wider block mb-1">
                                 Patient (RBAC)
                             </span>
-                            <span class="text-[9px] text-slate-500 font-semibold block">DOB: {{ $pat->profile->dob ?? 'N/A' }}</span>
+                            <span class="text-[9px] text-slate-500 font-semibold block">DOB: <?php echo e($pat->profile->dob ?? 'N/A'); ?></span>
                         </div>
                     </div>
-                @endforeach
-            @endif
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <?php endif; ?>
         </div>
     </div>
 
 </div>
-@endif
-@endsection
+<?php endif; ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.portal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\hmcdi\OneDrive\Documents\GITHUB\SL-medicare\resources\views/dashboard.blade.php ENDPATH**/ ?>
