@@ -89,6 +89,10 @@ fi
 echo "[Step 6/6] Launching Docker Containers..."
 docker compose up -d --build
 
+# Set permissions for logs, sessions, and cache
+echo "Setting permissions for storage and cache directories..."
+chmod -R 777 ../storage ../bootstrap/cache
+
 # Wait for database container boot-up
 echo "Waiting for database to initialize (15 seconds)..."
 sleep 15
