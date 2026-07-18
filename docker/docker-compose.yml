@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # 1. Laravel Web Service (Apache Container) - OS System Virtualization
+  web:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: hms_laravel_app
+    ports:
+      - "8080:80" # Port Virtualization mapping host 8080 to container 80
+    volumes:
+      - ..:/var/www/html # Code mount for development
+    environment:
+      - APP_NAME="Cloud HMS Portal"
+      - APP_ENV=local
+      - APP_KEY=base64:3u3nQvFw6lZ0fP3Y6BqQOqXvH95tK.JpLsn/Yl1N/g3f=
+      - APP_DEBUG=true
+      - APP_URL=http://localhost:8080
+      - DB_CONNECTION=mysql
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=hospital_management
+      - DB_USERNAME=root
+      - DB_PASSWORD=rootpassword
+      - CLOUDINARY_CLOUD_NAME=dhw7f5mxt # Shared demo storage credentials
+      - CLOUDINARY_UPLOAD_PRESET=hms_unsigned_preset
+    depends_on:
+      - db
+    networks:
+      - hms_network
+
+  # 2. Database Service (MySQL Container) - Managed SQL emulation
+  db:
+    image: mysql:8.0
+    container_name: hms_laravel_db
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_DATABASE=hospital_management
+    volumes:
+      - db_data:/var/lib/mysql # Persistent storage volume mapping
+    networks:
+      - hms_network
+
+# 3. Networks Definition - SDN Bridge Virtualization
+networks:
+  hms_network:
+    driver: bridge # Simulates an isolated cloud VPC subnet
+
+# 4. Volumes Definition - Software Defined Storage (SDS) Volume
+volumes:
+  db_data:
+    driver: local
