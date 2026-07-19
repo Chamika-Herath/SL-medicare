@@ -170,11 +170,6 @@
             
             <!-- Left Half: Branding & Typography Copy -->
             <div class="lg:col-span-6 space-y-6 text-left animate-slide-up">
-                <div class="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 text-brand-sky text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider shadow-sm">
-                    <span class="h-2 w-2 rounded-full bg-brand-sky animate-ping"></span>
-                    Integrated Portal v1.2
-                </div>
-                
                 <h1 class="text-4xl md:text-5.5xl tracking-tight text-white leading-[1.15] font-sans" style="font-family: 'Poppins', sans-serif;">
                     <span class="font-extrabold block">Communication</span>
                     <span class="font-light text-slate-350">that drives</span>
@@ -203,11 +198,11 @@
                 <!-- Bottom Stats -->
                 <div class="grid grid-cols-3 gap-6 pt-10 border-t border-white/10 max-w-sm w-full">
                     <div>
-                        <span class="text-3xl font-extrabold text-brand-sky block">50+</span>
+                        <span class="text-3xl font-extrabold text-brand-sky block">{{ $totalDoctors }}</span>
                         <span class="text-[9px] text-slate-450 uppercase tracking-widest font-bold">Specialists</span>
                     </div>
                     <div>
-                        <span class="text-3xl font-extrabold text-blue-400 block">15K+</span>
+                        <span class="text-3xl font-extrabold text-blue-400 block">{{ $totalPatients }}</span>
                         <span class="text-[9px] text-slate-450 uppercase tracking-widest font-bold">Patients</span>
                     </div>
                     <div>
@@ -254,59 +249,75 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <!-- Cardiology -->
-            <div class="clean-card bg-white p-6 rounded-2xl space-y-4 relative overflow-hidden group">
-                <div class="absolute top-0 left-0 right-0 h-[4px] bg-gradient-to-r from-brand-blue to-brand-sky opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div class="h-12 w-12 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-brand-blue shadow-sm">
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                    </svg>
+            <div class="clean-card bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-brand-blue transform hover:-translate-y-2 transition duration-300 group flex flex-col justify-between">
+                <div class="h-40 w-full overflow-hidden relative">
+                    <img src="{{ asset('assets/images/cardiology.png') }}" alt="Cardiology" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 filter brightness-95">
+                    <div class="absolute top-3 left-3 h-9 w-9 rounded-xl bg-blue-500/90 text-white flex items-center justify-center shadow-md">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                    </div>
                 </div>
-                <h3 class="text-lg font-bold text-brand-dark">Cardiology</h3>
-                <p class="text-xs text-brand-muted leading-relaxed font-semibold">
-                    Precision heart diagnostic imaging, ECG consulting, and cardiac surgeries backed by unified electronic patient logs.
-                </p>
+                <div class="p-5 flex-1 flex flex-col justify-between space-y-2">
+                    <h3 class="text-base font-extrabold text-brand-dark">Cardiology</h3>
+                    <p class="text-xs text-brand-muted leading-relaxed font-semibold">
+                        Precision heart diagnostic imaging, ECG consulting, and cardiac surgeries backed by unified electronic patient logs.
+                    </p>
+                </div>
             </div>
 
             <!-- Neurology -->
-            <div class="clean-card bg-white p-6 rounded-2xl space-y-4 relative overflow-hidden group">
-                <div class="absolute top-0 left-0 right-0 h-[4px] bg-gradient-to-r from-emerald-500 to-teal-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div class="h-12 w-12 rounded-2xl bg-teal-50 border border-teal-100 flex items-center justify-center text-teal-655 shadow-sm">
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                    </svg>
+            <div class="clean-card bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-teal-500 transform hover:-translate-y-2 transition duration-300 group flex flex-col justify-between">
+                <div class="h-40 w-full overflow-hidden relative">
+                    <img src="{{ asset('assets/images/neurology.png') }}" alt="Neurology" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 filter brightness-95">
+                    <div class="absolute top-3 left-3 h-9 w-9 rounded-xl bg-teal-500/90 text-white flex items-center justify-center shadow-md">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                        </svg>
+                    </div>
                 </div>
-                <h3 class="text-lg font-bold text-brand-dark">Neurology</h3>
-                <p class="text-xs text-brand-muted leading-relaxed font-semibold">
-                    Advanced brain scans analysis, CT imaging evaluations, sleep medicine, and neurological consulting.
-                </p>
+                <div class="p-5 flex-1 flex flex-col justify-between space-y-2">
+                    <h3 class="text-base font-extrabold text-brand-dark">Neurology</h3>
+                    <p class="text-xs text-brand-muted leading-relaxed font-semibold">
+                        Advanced brain scans analysis, CT imaging evaluations, sleep medicine, and neurological consulting.
+                    </p>
+                </div>
             </div>
 
             <!-- Diagnostic Scans -->
-            <div class="clean-card bg-white p-6 rounded-2xl space-y-4 relative overflow-hidden group">
-                <div class="absolute top-0 left-0 right-0 h-[4px] bg-gradient-to-r from-indigo-500 to-violet-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div class="h-12 w-12 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-650 shadow-sm">
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
+            <div class="clean-card bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-indigo-500 transform hover:-translate-y-2 transition duration-300 group flex flex-col justify-between">
+                <div class="h-40 w-full overflow-hidden relative">
+                    <img src="{{ asset('assets/images/imaging.png') }}" alt="Diagnostic Imaging" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 filter brightness-95">
+                    <div class="absolute top-3 left-3 h-9 w-9 rounded-xl bg-indigo-500/90 text-white flex items-center justify-center shadow-md">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                    </div>
                 </div>
-                <h3 class="text-lg font-bold text-brand-dark">Diagnostic Imaging</h3>
-                <p class="text-xs text-brand-muted leading-relaxed font-semibold">
-                    High-definition MRI and X-ray imaging uploads linked directly to secure Cloud Object Storage archives.
-                </p>
+                <div class="p-5 flex-1 flex flex-col justify-between space-y-2">
+                    <h3 class="text-base font-extrabold text-brand-dark">Diagnostic Imaging</h3>
+                    <p class="text-xs text-brand-muted leading-relaxed font-semibold">
+                        High-definition MRI and X-ray imaging uploads linked directly to secure Cloud Object Storage archives.
+                    </p>
+                </div>
             </div>
 
             <!-- Emergency Care -->
-            <div class="clean-card bg-white p-6 rounded-2xl space-y-4 relative overflow-hidden group">
-                <div class="absolute top-0 left-0 right-0 h-[4px] bg-gradient-to-r from-orange-500 to-amber-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div class="h-12 w-12 rounded-2xl bg-orange-50 border border-orange-100 flex items-center justify-center text-orange-600 shadow-sm">
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
+            <div class="clean-card bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl hover:border-orange-500 transform hover:-translate-y-2 transition duration-300 group flex flex-col justify-between">
+                <div class="h-40 w-full overflow-hidden relative">
+                    <img src="{{ asset('assets/images/trauma.png') }}" alt="Emergency Trauma" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 filter brightness-95">
+                    <div class="absolute top-3 left-3 h-9 w-9 rounded-xl bg-orange-500/90 text-white flex items-center justify-center shadow-md">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
                 </div>
-                <h3 class="text-lg font-bold text-brand-dark">Emergency Trauma</h3>
-                <p class="text-xs text-brand-muted leading-relaxed font-semibold">
-                    24/7 urgent responsive medical units utilizing state-of-the-art telemetry monitors and digital workflows.
-                </p>
+                <div class="p-5 flex-1 flex flex-col justify-between space-y-2">
+                    <h3 class="text-base font-extrabold text-brand-dark">Emergency Trauma</h3>
+                    <p class="text-xs text-brand-muted leading-relaxed font-semibold">
+                        24/7 urgent responsive medical units utilizing state-of-the-art telemetry monitors and digital workflows.
+                    </p>
+                </div>
             </div>
         </div>
     </section>
@@ -317,37 +328,44 @@
     <section id="technologies" class="max-w-7xl mx-auto px-6 py-20 bg-white border-t border-brand-border">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div class="space-y-5">
-                <span class="text-xs font-bold text-brand-blue uppercase tracking-widest">Developer First</span>
-                <h3 class="text-3xl font-extrabold text-brand-dark">One API Call. <span class="text-brand-blue">Billions of Devices.</span></h3>
+                <span class="text-xs font-bold text-brand-blue uppercase tracking-widest">Portal Engineering</span>
+                <h3 class="text-3xl font-extrabold text-brand-dark">Secure. Connected. <span class="text-brand-blue">Cloud-Native.</span></h3>
                 <blockquote class="border-l-4 border-brand-blue pl-4 italic text-sm text-brand-muted font-medium">
-                    "Simplicity is the ultimate sophistication. We took complex global medical database structures and compressed them into a single-line REST query."
+                    "Designed for modern healthcare: uniting doctors, patients, and administrators in a single, secure cloud platform with fully audited medical files."
                 </blockquote>
                 <ul class="space-y-3.5 text-xs text-slate-700 font-semibold">
                     <li class="flex items-center gap-3">
                         <span class="h-6 w-6 bg-blue-50 border border-blue-200 text-brand-blue rounded-full flex items-center justify-center font-bold">✓</span>
-                        Secure Encrypted TLS 1.3 Data Pipelines
+                        Conflict-Free Appointment Scheduling System
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="h-6 w-6 bg-teal-50 border border-teal-200 text-teal-655 rounded-full flex items-center justify-center font-bold">✓</span>
-                        Object Storage (Cloudinary API) for Scans
+                        Cloud Storage Integration for Imaging Scan Assets
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="h-6 w-6 bg-indigo-50 border border-indigo-200 text-indigo-650 rounded-full flex items-center justify-center font-bold">✓</span>
-                        Role-Based Access Control Middleware (RBAC)
+                        Role-Based Access Control Security (RBAC Middleware)
                     </li>
                 </ul>
             </div>
             
-            <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 shadow-inner">
-                <div class="text-[10px] font-bold text-slate-550 uppercase mb-3">System Node Logs</div>
-                <div class="font-mono text-[11px] text-sky-350 space-y-2 leading-relaxed bg-slate-950 p-4 rounded-xl max-h-60 overflow-y-auto">
-                    <div>[2026-07-18 14:00:15] Initialize StJ-Node cluster...</div>
-                    <div>[2026-07-18 14:00:16] Connection open to cloud DB. Latency: 12ms</div>
-                    <div>[2026-07-18 14:00:18] Mounted docker software-defined storage 'db_data'.</div>
-                    <div>[2026-07-18 14:00:20] Enforcing HIPAA encryption at-rest (AES-256).</div>
-                    <div>[2026-07-18 14:00:21] Route controller registered: GET /api/get-appointments</div>
-                    <div>[2026-07-18 14:00:22] Route controller registered: POST /api/upload-imaging</div>
-                    <div class="text-slate-500">[2026-07-18 14:15:02] Listening on virtual bridge network gateway...</div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-950 p-5 rounded-2xl border border-slate-800 shadow-inner">
+                <!-- Log feed -->
+                <div class="flex flex-col justify-between">
+                    <div class="text-[10px] font-bold text-slate-550 uppercase mb-2.5">System Node Logs</div>
+                    <div class="font-mono text-[11px] text-sky-350 space-y-2.5 leading-relaxed max-h-56 overflow-y-auto pr-1">
+                        <div>[2026-07-18 14:00:15] Initialize SL-Medicare-Node cluster...</div>
+                        <div>[2026-07-18 14:00:16] Connection open to cloud DB. Latency: 12ms</div>
+                        <div>[2026-07-18 14:00:18] Mounted docker software-defined storage 'db_data'.</div>
+                        <div>[2026-07-18 14:00:20] Enforcing HIPAA encryption at-rest (AES-256).</div>
+                        <div>[2026-07-18 14:00:21] Route controller registered: GET /api/get-appointments</div>
+                        <div>[2026-07-18 14:00:22] Route controller registered: POST /api/upload-imaging</div>
+                        <div class="text-slate-500">[2026-07-18 14:15:02] Listening on virtual bridge network gateway...</div>
+                    </div>
+                </div>
+                <!-- Graphic image -->
+                <div class="h-44 md:h-full w-full rounded-xl overflow-hidden border border-slate-800">
+                    <img src="{{ asset('assets/images/cloud_infrastructure.png') }}" alt="Cloud Network" class="w-full h-full object-cover filter brightness-[0.85] saturate-110">
                 </div>
             </div>
         </div>
@@ -356,11 +374,11 @@
     <!-- ========================================== -->
     <!-- FOOTER                                     -->
     <!-- ========================================== -->
-    <footer class="border-t border-brand-border bg-white py-12 text-center text-xs text-slate-500">
+    <footer class="border-t border-slate-800 bg-[#0d131f] py-12 text-center text-xs text-slate-400">
         <div class="max-w-7xl mx-auto px-6 space-y-4">
-            <p class="font-bold text-slate-700">&copy; 2026 SL Medicare. All rights reserved.</p>
-            <p class="max-w-md mx-auto leading-relaxed text-slate-400">
-                SL Medicare is a fictional medical platform designed for cloud systems evaluation. All medical imaging uploads are stored in free cloud containers.
+            <p class="font-bold text-white">&copy; 2026 SL Medicare. All rights reserved.</p>
+            <p class="max-w-md mx-auto leading-relaxed text-slate-500">
+                SL Medicare is a secure clinical management platform designed for cloud computing systems. Diagnostic scanning files and report attachments are hosted in distributed remote cloud storage.
             </p>
         </div>
     </footer>

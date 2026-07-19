@@ -14,7 +14,9 @@ use App\Http\Controllers\MedicalRecordController;
 
 // Root landing page for the private hospital
 Route::get('/', function () {
-    return view('welcome');
+    $totalDoctors = \App\Models\User::where('role', 'DOCTOR')->count();
+    $totalPatients = \App\Models\User::where('role', 'PATIENT')->count();
+    return view('welcome', compact('totalDoctors', 'totalPatients'));
 });
 
 // Authentication routes
