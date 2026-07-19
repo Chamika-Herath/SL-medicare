@@ -61,8 +61,8 @@
         <aside class="w-64 bg-[#0d131f] border-r border-slate-800/80 flex flex-col justify-between shrink-0 hidden md:flex min-h-screen shadow-lg">
             <div>
                 <!-- Brand logo (Hexagon Heartbeat Logo) -->
-                <div class="p-6 border-b border-slate-800/80 flex items-center gap-3">
-                    <div class="h-10 w-10 flex items-center justify-center transform hover:scale-105 transition duration-200">
+                <a href="/" class="p-6 border-b border-slate-800/80 flex items-center gap-3 hover:bg-slate-800/20 transition group">
+                    <div class="h-10 w-10 flex items-center justify-center transform group-hover:scale-105 transition duration-200">
                         <svg class="h-full w-full" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M50 7 L88 29 V71 L50 93 L12 71 V29 Z" stroke="url(#logo-grad-sidebar)" stroke-width="6" stroke-linejoin="round" fill="rgba(37, 99, 235, 0.1)"/>
                             <path d="M26 50 H39 L44 32 L50 68 L56 42 L61 50 H74" stroke="#38BDF8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -75,10 +75,10 @@
                         </svg>
                     </div>
                     <div>
-                        <span class="font-extrabold text-sm text-white block">SL Medicare</span>
+                        <span class="font-extrabold text-sm text-white block group-hover:text-brand-sky transition">SL Medicare</span>
                         <span class="text-[9px] text-hospital-500 font-bold uppercase tracking-wider">{{ $role }} Portal</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- Navigation Links -->
                 <nav class="p-4 space-y-2">
@@ -173,6 +173,16 @@
                             <span class="text-sm font-medium">My Medical History</span>
                         </a>
                     @endif
+
+                    <!-- Back to Home Link (All Roles) -->
+                    <div class="pt-2 mt-2 border-t border-slate-800/60">
+                        <a href="/" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition duration-200">
+                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                            </svg>
+                            <span class="text-sm font-medium">Go to Home</span>
+                        </a>
+                    </div>
                 </nav>
             </div>
 
@@ -215,11 +225,6 @@
                 </div>
 
                 <div class="flex items-center gap-4">
-                    <div class="flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider">
-                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                        Laravel Cloud Node
-                    </div>
-                    <div class="h-8 w-px bg-slate-800"></div>
                     <div class="flex items-center gap-2.5">
                         <div class="h-8 w-8 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-brand-sky font-bold text-sm">
                             {{ strtoupper(substr($fullName, 0, 1)) }}
@@ -354,6 +359,16 @@
                         <span class="text-sm font-medium">My Medical History</span>
                     </a>
                 @endif
+
+                <!-- Back to Home Link (All Roles) -->
+                <div class="pt-2 mt-2 border-t border-slate-800/60">
+                    <a href="/" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800/50 hover:text-white transition">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                        </svg>
+                        <span class="text-sm font-medium">Go to Home</span>
+                    </a>
+                </div>
             </nav>
         </div>
         
